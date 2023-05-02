@@ -61,3 +61,14 @@ def edit_user(user_id):
         return redirect(f'/users/{user.id}')
     else:
         return render_template('user/edit.html', user=user)
+        
+        
+@app.route('/users/<int:user_id>/delete', methods=["POST"])
+def users_destroy(user_id):
+    """Handle form submission for deleting an existing user"""
+
+    user = User.query.get_or_404(user_id)
+    db.session.delete(user)
+    db.session.commit()
+
+    return redirect("/users")
